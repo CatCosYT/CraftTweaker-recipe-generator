@@ -1,0 +1,165 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --background-color: #ecf0f1;
+    --text-color: #2c3e50;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.recipe-type-selector {
+    display: flex;
+    justify-content: center;<boltAction type="file" filePath="public/styles.css">    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.recipe-type-selector button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--secondary-color);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.recipe-type-selector button.active {
+    background-color: var(--accent-color);
+}
+
+.recipe-form {
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.crafting-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.grid-row {
+    display: flex;
+    gap: 5px;
+}
+
+.grid-item {
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 4px;
+    text-align: center;
+}
+
+.output-section, .metalpress-inputs, .infusion-central, .manainfusion-inputs {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.ingredients-list, .aspects-list, .outputs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.ingredient-row, .aspect-row, .output-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.aspect-name {
+    flex: 2;
+}
+
+.aspect-amount {
+    flex: 1;
+    max-width: 80px;
+}
+
+.furnace-inputs {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-items: center;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 8px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+}
+
+.generate-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.output-container {
+    background-color: var(--secondary-color);
+    padding: 20px;
+    border-radius: 4px;
+    position: relative;
+}
+
+#recipe-output {
+    color: white;
+    margin: 0;
+    white-space: pre-wrap;
+    font-family: monospace;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

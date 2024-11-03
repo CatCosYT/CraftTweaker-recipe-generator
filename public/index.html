@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CraftTweaker Recipe Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>CraftTweaker Recipe Generator</h1>
+        
+        <div class="recipe-type-selector">
+            <button onclick="switchRecipeType('shaped')" class="active">Shaped</button>
+            <button onclick="switchRecipeType('shapeless')">Shapeless</button>
+            <button onclick="switchRecipeType('furnace')">Furnace</button>
+            <button onclick="switchRecipeType('metalpress')">Metal Press</button>
+            <button onclick="switchRecipeType('arcane')">Arcane Workbench</button>
+            <button onclick="switchRecipeType('infusion')">Infusion</button>
+            <button onclick="switchRecipeType('manainfusion')">Mana Infusion</button>
+            <button onclick="switchRecipeType('elventrade')">Elven Trade</button>
+            <button onclick="switchRecipeType('runealtar')">Rune Altar</button>
+        </div>
+
+        <!-- Existing forms -->
+        <div id="shaped-form" class="recipe-form">
+            <h2>Shaped Recipe</h2>
+            <div class="crafting-grid">
+                <div class="grid-row">
+                    <input type="text" class="grid-item" data-pos="0,0">
+                    <input type="text" class="grid-item" data-pos="0,1">
+                    <input type="text" class="grid-item" data-pos="0,2">
+                </div>
+                <div class="grid-row">
+                    <input type="text" class="grid-item" data-pos="1,0">
+                    <input type="text" class="grid-item" data-pos="1,1">
+                    <input type="text" class="grid-item" data-pos="1,2">
+                </div>
+                <div class="grid-row">
+                    <input type="text" class="grid-item" data-pos="2,0">
+                    <input type="text" class="grid-item" data-pos="2,1">
+                    <input type="text" class="grid-item" data-pos="2,2">
+                </div>
+            </div>
+            <div class="output-section">
+                <label>Output Item:</label>
+                <input type="text" id="shaped-output" placeholder="minecraft:item_name">
+                <label>Metadata:</label>
+                <input type="number" id="shaped-metadata" value="0">
+            </div>
+        </div>
+
+        <div id="shapeless-form" class="recipe-form hidden">
+            <h2>Shapeless Recipe</h2>
+            <div class="ingredients-list">
+                <div class="ingredient-row">
+                    <input type="text" placeholder="minecraft:item_name">
+                    <button onclick="addIngredient(this)">+</button>
+                </div>
+            </div>
+            <div class="output-section">
+                <label>Output Item:</label>
+                <input type="text" id="shapeless-output" placeholder="minecraft:item_name">
+                <label>Metadata:</label>
+                <input type="number" id="shapeless-metadata" value="0">
+            </div>
+        </div>
+
+        <div id="furnace-form" class="recipe-form hidden">
+            <h2>Furnace Recipe</h2>
+            <div class="furnace-inputs">
+                <label>Input Item:</label>
+                <input type="text" id="furnace-input" placeholder="minecraft:item_name">
+                <label>Output Item:</label>
+                <input type="text" id="furnace-output" placeholder="minecraft:item_name">
+                <label>XP:</label>
+                <input type="number" id="furnace-xp" value="0.0" step="0.1">
+                <label>Metadata:</label>
+                <input type="number" id="furnace-metadata" value="0">
+            </div>
+        </div>
+
+        <div id="metalpress-form" class="recipe-form hidden">
+            <h2>Metal Press Recipe</h2>
+            <div class="metalpress-inputs">
+                <label>Input Item:</label>
+                <input type="text" id="metalpress-input" placeholder="minecraft:item_name">
+                <label>Mold Item:</label>
+                <input type="text" id="metalpress-mold" placeholder="immersiveengineering:mold_name">
+                <label>Output Item:</label>
+                <input type="text" id="metalpress-output" placeholder="minecraft:item_name">
+                <label>Energy (RF):</label>
+                <input type="number" id="metalpress-energy" value="2400">
+                <label>Metadata:</label>
+                <input type="number" id="metalpress-metadata" value="0">
+            </div>
+        </div>
+
+        <div id="arcane-form" class="recipe-form hidden">
+            <h2>Arcane Workbench Recipe</h2>
+            <div class="crafting-grid">
+                <div class="grid-row">
+                    <input type="text" class="grid-item" data-arcane-pos="0,0">
+                    <input type="text" class="grid-item" data-arcane-pos="0,1">
+                    <input type="text" class="grid-item" data-arcane-pos="0,2">
+                </div>
+                <div class="grid-row">
+                    <input type="text" class="grid-item" data-arcane-pos="1,0">
+                    <input type="text" class="grid-item" data-arcane-pos="1,1">
+                    <input type="text" class="grid-item" data-arcane-pos="1,2">
+                </div>
+                <div class="grid-row">
+                    <input type="text" class="grid-item" data-arcane-pos="2,0">
+                    <input type="text" class="grid-item" data-arcane-pos="2,1">
+                    <input type="text" class="grid-item" data-arcane-pos="2,2">
+                </div>
+            </div>
+            <div class="aspects-list">
+                <h3>Required Aspects</h3>
+                <div class="aspect-row">
+                    <input type="text" placeholder="Aspect name" class="aspect-name">
+                    <input type="number" value="1" min="1" class="aspect-amount">
+                    <button onclick="addAspect(this)">+</button>
+                </div>
+            </div>
+            <div class="output-section">
+                <label>Output Item:</label>
+                <input type="text" id="arcane-output" placeholder="minecraft:item_name">
+                <label>Metadata:</label>
+                <input type="number" id="arcane-metadata" value="0">
+            </div>
+        </div>
+
+        <div id="infusion-form" class="recipe-form hidden">
+            <h2>Infusion Recipe</h2>
+            <div class="infusion-central">
+                <label>Central Item:</label>
+                <input type="text" id="infusion-central" placeholder="minecraft:item_name">
+            </div>
+            <div class="ingredients-list">
+                <h3>Pedestals</h3>
+                <div class="ingredient-row">
+                    <input type="text" placeholder="minecraft:item_name">
+                    <button onclick="addIngredient(this)">+</button>
+                </div>
+            </div>
+            <div class="aspects-list">
+                <h3>Required Aspects</h3>
+                <div class="aspect-row">
+                    <input type="text" placeholder="Aspect name" class="aspect-name">
+                    <input type="number" value="1" min="1" class="aspect-amount">
+                    <button onclick="addAspect(this)">+</button>
+                </div>
+            </div>
+            <div class="output-section">
+                <label>Output Item:</label>
+                <input type="text" id="infusion-output" placeholder="minecraft:item_name">
+                <label>Instability:</label>
+                <input type="number" id="infusion-instability" value="0" min="0">
+                <label>Metadata:</label>
+                <input type="number" id="infusion-metadata" value="0">
+            </div>
+        </div>
+
+        <div id="manainfusion-form" class="recipe-form hidden">
+            <h2>Mana Infusion Recipe</h2>
+            <div class="manainfusion-inputs">
+                <label>Input Item:</label>
+                <input type="text" id="manainfusion-input" placeholder="minecraft:item_name">
+                <label>Output Item:</label>
+                <input type="text" id="manainfusion-output" placeholder="minecraft:item_name">
+                <label>Mana Cost:</label>
+                <input type="number" id="manainfusion-mana" value="2000" min="1">
+                <label>Catalyst (Optional):</label>
+                <input type="text" id="manainfusion-catalyst" placeholder="botania:block_name">
+                <label>Metadata:</label>
+                <input type="number" id="manainfusion-metadata" value="0">
+            </div>
+        </div>
+
+        <div id="elventrade-form" class="recipe-form hidden">
+            <h2>Elven Trade Recipe</h2>
+            <div class="ingredients-list">
+                <h3>Input Items</h3>
+                <div class="ingredient-row">
+                    <input type="text" placeholder="minecraft:item_name">
+                    <button onclick="addIngredient(this)">+</button>
+                </div>
+            </div>
+            <div class="outputs-list">
+                <h3>Output Items</h3>
+                <div class="output-row">
+                    <input type="text" placeholder="minecraft:item_name">
+                    <button onclick="addOutput(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="runealtar-form" class="recipe-form hidden">
+            <h2>Rune Altar Recipe</h2>
+            <div class="ingredients-list">
+                <h3>Input Items</h3>
+                <div class="ingredient-row">
+                    <input type="text" placeholder="minecraft:item_name">
+                    <button onclick="addIngredient(this)">+</button>
+                </div>
+            </div>
+            <div class="output-section">
+                <label>Output Item:</label>
+                <input type="text" id="runealtar-output" placeholder="minecraft:item_name">
+                <label>Mana Cost:</label>
+                <input type="number" id="runealtar-mana" value="5000" min="1">
+                <label>Metadata:</label>
+                <input type="number" id="runealtar-metadata" value="0">
+            </div>
+        </div>
+
+        <button onclick="generateRecipe()" class="generate-btn">Generate Recipe</button>
+        
+        <div class="output-container">
+            <pre id="recipe-output"></pre>
+            <button onclick="copyToClipboard()" class="copy-btn">Copy to Clipboard</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
